@@ -270,21 +270,21 @@ export default function ProductManagerPage() {
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b pb-2">
                 <div>
-                  <p className="font-medium">Ergonomic Office Chair</p>
+                  <p className="font-medium">Ergonomic Office Chair Collection</p>
                   <p className="text-sm text-muted-foreground">PRD-2023-001</p>
                 </div>
                 <Badge className="bg-red-100 text-red-800">Due in 2 weeks</Badge>
               </div>
               <div className="flex items-center justify-between border-b pb-2">
                 <div>
-                  <p className="font-medium">Adjustable Standing Desk</p>
+                  <p className="font-medium">Solid Oak Adjustable Standing Desk</p>
                   <p className="text-sm text-muted-foreground">PRD-2023-002</p>
                 </div>
                 <Badge className="bg-amber-100 text-amber-800">Due in 1 month</Badge>
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium">Modular Storage System</p>
+                  <p className="font-medium">Walnut Modular Storage System</p>
                   <p className="text-sm text-muted-foreground">PRD-2023-003</p>
                 </div>
                 <Badge className="bg-green-100 text-green-800">Due in 2 months</Badge>

@@ -289,21 +289,21 @@ export default function TaskManagerPage() {
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b pb-2">
                 <div>
-                  <p className="font-medium">Office Chairs (10)</p>
+                  <p className="font-medium">Ergonomic Office Chairs (10)</p>
                   <p className="text-sm text-muted-foreground">PO-2023-001</p>
                 </div>
                 <Badge className="bg-red-100 text-red-800">Due in 2 days</Badge>
               </div>
               <div className="flex items-center justify-between border-b pb-2">
                 <div>
-                  <p className="font-medium">Bookshelves (8)</p>
+                  <p className="font-medium">Oak Bookshelves (8)</p>
                   <p className="text-sm text-muted-foreground">PO-2023-002</p>
                 </div>
                 <Badge className="bg-amber-100 text-amber-800">Due in 5 days</Badge>
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium">Filing Cabinets (3)</p>
+                  <p className="font-medium">Walnut Filing Cabinets (3)</p>
                   <p className="text-sm text-muted-foreground">PO-2023-003</p>
                 </div>
                 <Badge className="bg-green-100 text-green-800">Due in 10 days</Badge>

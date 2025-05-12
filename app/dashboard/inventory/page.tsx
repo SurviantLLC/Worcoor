@@ -35,7 +35,7 @@ export default function InventoryManagementPage() {
                 <span className="text-muted-foreground">Monthly growth</span>
                 <span className="font-medium text-blue-600">+12.5%</span>
               </div>
-              <Progress value={65} className="mt-2 h-2" indicatorClassName="bg-blue-500" />
+              <Progress value={65} className="mt-2 h-2" />
             </div>
           </CardContent>
         </Card>
@@ -56,7 +56,7 @@ export default function InventoryManagementPage() {
                 <span className="text-muted-foreground">Monthly change</span>
                 <span className="font-medium text-green-600">+8.2%</span>
               </div>
-              <Progress value={82} className="mt-2 h-2" indicatorClassName="bg-green-500" />
+              <Progress value={82} className="mt-2 h-2" />
             </div>
           </CardContent>
         </Card>
@@ -77,7 +77,7 @@ export default function InventoryManagementPage() {
                 <span className="text-muted-foreground">Weekly change</span>
                 <span className="font-medium text-amber-600">-3.1%</span>
               </div>
-              <Progress value={35} className="mt-2 h-2" indicatorClassName="bg-amber-500" />
+              <Progress value={35} className="mt-2 h-2" />
             </div>
           </CardContent>
         </Card>
@@ -98,7 +98,7 @@ export default function InventoryManagementPage() {
                 <span className="text-muted-foreground">Monthly target</span>
                 <span className="font-medium text-red-600">3.0%</span>
               </div>
-              <Progress value={24} className="mt-2 h-2" indicatorClassName="bg-red-500" />
+              <Progress value={25} className="mt-2 h-2" />
             </div>
           </CardContent>
         </Card>
@@ -312,19 +312,19 @@ export default function InventoryManagementPage() {
                 },
                 {
                   action: "Wastage Recorded",
-                  sku: "MT-LEG-02",
+                  sku: "WD-OAK-02",
                   quantity: 3,
                   date: "Today, 9:15 AM",
                 },
                 {
                   action: "Procurement Created",
-                  sku: "UPH-SEAT-02",
+                  sku: "UPH-FABRIC-02",
                   quantity: 30,
                   date: "Yesterday, 4:45 PM",
                 },
                 {
                   action: "Stock Adjusted",
-                  sku: "HW-SCREWS-01",
+                  sku: "HW-DOWEL-01",
                   quantity: -5,
                   date: "Yesterday, 2:30 PM",
                 },

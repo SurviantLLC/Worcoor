@@ -39,10 +39,33 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "@/hooks/use-toast"
 
-// Sample worker skills data
-const initialWorkerSkills = [
+// Define types for worker skills
+interface WorkerSkill {
+  id: number
+  worker: string
+  skill: string
+  proficiency: string
+  certified: boolean
+  certificationDate: string | null
+  expiryDate: string | null
+  trainingHours: number
+}
+
+interface NewSkillForm {
+  worker: string
+  skill: string
+  proficiency: string
+  certified: boolean
+  certificationDate: string
+  expiryDate: string
+  trainingHours: number
+  notes: string
+}
+
+// Sample worker skills data for furniture manufacturing
+const initialWorkerSkills: WorkerSkill[] = [
   {
     id: 1,
     worker: "John Smith",
@@ -86,7 +109,7 @@ const initialWorkerSkills = [
   {
     id: 5,
     worker: "Michael Brown",
-    skill: "Mechanical",
+    skill: "CNC Operation",
     proficiency: "Expert",
     certified: true,
     certificationDate: "2022-03-15",
@@ -96,7 +119,7 @@ const initialWorkerSkills = [
   {
     id: 6,
     worker: "Michael Brown",
-    skill: "Electrical",
+    skill: "Joinery",
     proficiency: "Intermediate",
     certified: false,
     certificationDate: null,
@@ -154,31 +177,31 @@ const workers = [
   { value: "robert-wilson", label: "Robert Wilson" },
 ]
 
-// Sample skills
+// Sample skills for furniture manufacturing
 const skills = [
   { value: "woodworking", label: "Woodworking" },
-  { value: "metalworking", label: "Metalworking" },
+  { value: "joinery", label: "Joinery" },
   { value: "assembly", label: "Assembly" },
   { value: "finishing", label: "Finishing" },
   { value: "quality-control", label: "Quality Control" },
   { value: "packaging", label: "Packaging" },
-  { value: "electrical", label: "Electrical" },
-  { value: "mechanical", label: "Mechanical" },
   { value: "upholstery", label: "Upholstery" },
   { value: "cnc-operation", label: "CNC Operation" },
+  { value: "veneering", label: "Veneering" },
+  { value: "wood-carving", label: "Wood Carving" },
 ]
 
 export default function WorkerSkillsPage() {
-  const [workerSkills, setWorkerSkills] = useState(initialWorkerSkills)
+  const [workerSkills, setWorkerSkills] = useState<WorkerSkill[]>(initialWorkerSkills)
   const [searchTerm, setSearchTerm] = useState("")
   const [workerFilter, setWorkerFilter] = useState("All")
   const [skillFilter, setSkillFilter] = useState("All")
   const [currentPage, setCurrentPage] = useState(1)
-  const [selectedSkill, setSelectedSkill] = useState<any>(null)
+  const [selectedSkill, setSelectedSkill] = useState<WorkerSkill | null>(null)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-  const [newSkill, setNewSkill] = useState({
+  const [newSkill, setNewSkill] = useState<NewSkillForm>({
     worker: "",
     skill: "",
     proficiency: "Beginner",
@@ -246,7 +269,7 @@ export default function WorkerSkillsPage() {
       return
     }
 
-    const newWorkerSkill = {
+    const newWorkerSkill: WorkerSkill = {
       id,
       worker: selectedWorker.label,
       skill: selectedSkillItem.label,

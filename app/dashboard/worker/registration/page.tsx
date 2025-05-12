@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, ChangeEvent, FormEvent } from "react"
 import { Check, ChevronsUpDown, Upload } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -10,11 +10,34 @@ import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
+// Define types for skills and form data
+type Skill = {
+  label: string
+  value: string
+}
+
+type FormValues = {
+  name: string
+  mobileNumber: string
+  idUpload: string
+  qualifications: string
+  skills: string[]
+  salaryType: string
+  salaryRate: string
+  address: string
+  emergencyContact: string
+  notes: string
+}
+
+type FormErrors = {
+  [key in keyof FormValues]?: string
+}
+
 // Sample skills data
-const skills = [
+const skills: Skill[] = [
   { label: "Woodworking", value: "woodworking" },
   { label: "Metalworking", value: "metalworking" },
   { label: "Assembly", value: "assembly" },
@@ -33,7 +56,7 @@ const skills = [
 
 export default function WorkerRegistrationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<FormValues>({
     name: "",
     mobileNumber: "",
     idUpload: "",
@@ -45,11 +68,11 @@ export default function WorkerRegistrationPage() {
     emergencyContact: "",
     notes: "",
   })
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState<FormErrors>({})
 
   // Validation function
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors: FormErrors = {}
 
     if (!formValues.name || formValues.name.length < 2) {
       newErrors.name = "Name must be at least 2 characters."
@@ -88,7 +111,7 @@ export default function WorkerRegistrationPage() {
   }
 
   // Handle form field changes
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormValues((prev) => ({
       ...prev,
@@ -97,7 +120,7 @@ export default function WorkerRegistrationPage() {
   }
 
   // Handle select changes
-  const handleSelectChange = (name, value) => {
+  const handleSelectChange = (name: keyof FormValues, value: string) => {
     setFormValues((prev) => ({
       ...prev,
       [name]: value,
@@ -105,9 +128,9 @@ export default function WorkerRegistrationPage() {
   }
 
   // Handle skill selection
-  const handleSkillSelect = (skill) => {
+  const handleSkillSelect = (skill: string) => {
     const isSelected = formValues.skills.includes(skill)
-    let updated = []
+    let updated: string[] = []
 
     if (isSelected) {
       updated = formValues.skills.filter((s) => s !== skill)
@@ -122,11 +145,11 @@ export default function WorkerRegistrationPage() {
   }
 
   // Handle file upload
-  const handleFileUpload = (e) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      // In a real app, you would upload the file to a server and get a URL
-      // For this example, we'll just store the file name
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // This would typically handle file uploads to a server
+    // For this example, we'll just store the file name
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0]
       setFormValues((prev) => ({
         ...prev,
         idUpload: file.name,
@@ -135,7 +158,7 @@ export default function WorkerRegistrationPage() {
   }
 
   // Reset form
-  const resetForm = () => {
+  const resetForm = (): void => {
     setFormValues({
       name: "",
       mobileNumber: "",
@@ -152,7 +175,7 @@ export default function WorkerRegistrationPage() {
   }
 
   // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
 
     if (!validateForm()) {

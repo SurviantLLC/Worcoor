@@ -53,9 +53,10 @@ const productionTrend = [
 ]
 
 const inventoryData = [
-  { name: "Furniture", value: 45 },
-  { name: "Storage", value: 30 },
-  { name: "Accessories", value: 25 },
+  { name: "Chairs & Seating", value: 35 },
+  { name: "Tables & Desks", value: 30 },
+  { name: "Storage Units", value: 25 },
+  { name: "Bed Frames", value: 10 },
 ]
 
 const workerEfficiencyData = [

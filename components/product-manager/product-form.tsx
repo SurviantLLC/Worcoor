@@ -103,7 +103,7 @@ const formSchema = z.object({
         id: z.string(),
         name: z.string(),
         quantity: z.number().min(1),
-        isPrimary: z.boolean().default(false),
+        isPrimary: z.boolean(),
       }),
     )
     .min(1, {
@@ -178,7 +178,17 @@ export function ProductForm({ initialData, onSubmit, onCancel }: ProductFormProp
     try {
       // Add custom fields to the form data
       data.customFields = customFields
-      onSubmit(data)
+
+      // Ensure all SKUs have a valid isPrimary property
+      const processedData = {
+        ...data,
+        skus: data.skus.map((sku) => ({
+          ...sku,
+          isPrimary: sku.isPrimary === undefined ? false : sku.isPrimary,
+        })),
+      }
+
+      onSubmit(processedData)
     } catch (error) {
       console.error("Error submitting form:", error)
     } finally {
@@ -211,15 +221,14 @@ export function ProductForm({ initialData, onSubmit, onCancel }: ProductFormProp
     const exists = currentSkus.some((s) => s.id === sku.value)
 
     if (!exists) {
-      setValue("skus", [
-        ...currentSkus,
-        {
-          id: sku.value,
-          name: sku.label,
-          quantity: 1,
-          isPrimary: currentSkus.length === 0, // First SKU is primary by default
-        },
-      ])
+      const newSku = {
+        id: sku.value,
+        name: sku.label,
+        quantity: 1,
+        isPrimary: currentSkus.length === 0, // First SKU is primary by default
+      }
+      // Use type assertion to inform TypeScript this matches the schema
+      setValue("skus", [...currentSkus, newSku as ProductFormValues["skus"][0]])
     }
   }
 
@@ -244,10 +253,13 @@ export function ProductForm({ initialData, onSubmit, onCancel }: ProductFormProp
   // Toggle SKU primary status
   const toggleSkuPrimary = (id: string) => {
     const currentSkus = form.getValues("skus")
-    setValue(
-      "skus",
-      currentSkus.map((sku) => (sku.id === id ? { ...sku, isPrimary: true } : { ...sku, isPrimary: false })),
-    )
+    // Create properly typed array with explicit isPrimary values
+    const updatedSkus = currentSkus.map((sku) => ({
+      ...sku,
+      isPrimary: sku.id === id
+    })) as ProductFormValues["skus"]
+  
+    setValue("skus", updatedSkus)
   }
 
   // Add a new manufacturing step
